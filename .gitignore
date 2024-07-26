@@ -3,7 +3,6 @@ bundle.js
 out.js
 /dist
 nx.json
-/mock_files
 
 
 .nx/cache
