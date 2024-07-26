@@ -6,23 +6,31 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node run.js",
-    "build": "webpack --config webpack.config.js && echo 'export const main = __webpack_exports__.main;' >> dist/bundle.js",
+    "build": "webpack --config webpack.config.js",
+    "exec": "rm -rf build && esbuild function.js --platform=node --outdir=build --bundle",
     "create": "esbuild function.js --bundle --outfile=out.js"
-
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
     "fastify": "^4.28.1",
     "node-fetch": "^3.3.2",
-    "serverless-http": "^3.2.0"
+    "serverless-http": "^3.2.0",
+    "webpack-node-externals": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.7",
-    "@babel/preset-env": "^7.24.7",
+    "@babel/core": "^7.24.9",
+    "@babel/preset-env": "^7.24.8",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "@types/webpack-node-externals": "^3.0.4",
     "babel-loader": "^9.1.3",
-    "esbuild": "0.23.0",
+    "esbuild": "^0.23.0",
+    "esbuild-node-externals": "^1.14.0",
+    "nx": "19.5.2",
     "webpack-cli": "^5.1.4"
-  }
+  },
+  "nx": {}
 }

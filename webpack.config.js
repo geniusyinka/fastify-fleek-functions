@@ -1,31 +1,42 @@
-const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
-  module.exports = {
-    entry: "./function.js",
-    output: {
-      library: {
-        type: 'module',
-      },
-      filename: "bundle.js",
-      path: path.resolve(__dirname, "dist"),
-    },
-    mode: "none",
-    experiments: {
-      outputModule: true,
-    },
+const config = {
+  target: 'node',
+  mode: 'development',
+  externals: [nodeExternals(), {
+    'worker_threads': 'commonjs worker_threads',
+    'module': 'commonjs module',
+    'os': 'commonjs os',
+    'fs': 'commonjs fs',
+  }],
+  entry: './express.js',
+  output: {
+    path: __dirname,
+    filename: '[name].bundle.js',
+    libraryTarget: 'commonjs2',
+  },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
-      }
-    ]
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: {
+                    node: 'current',
+                  },
+                },
+              ],
+            ],
+          },
+        },
+      },
+    ],
   },
-  resolve: {
-    extensions: ['.js']
-  }
 };
+
+module.exports = [config];

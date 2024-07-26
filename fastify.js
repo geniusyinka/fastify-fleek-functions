@@ -1,20 +1,21 @@
-// ESM
-import Fastify from 'fastify';
+import fastify from "fastify";
 
-const fastify = Fastify({
-  logger: true
+const app = fastify();
+
+app.get("/", async (request, reply) => {
+  return { foo: "bar" };
 });
 
-// Declare a route
-fastify.get('/', function (request, reply) {
-  reply.send({ hello: 'world' });
+app.get("/hello", async (request, reply) => {
+  return { hello: "world" };
 });
 
-// Run the server!
-fastify.listen({ port: 80 }, function (err, address) {
-  if (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
-  console.log(`Server is now listening on ${address}`);
-});
+export async function main(param) {
+  return app.inject({
+    method: param.method,
+    url: param.path,
+    query: param.query,
+    payload: param.body,
+    headers: param.headers,
+  });
+}
